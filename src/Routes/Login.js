@@ -1,39 +1,37 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"
+const navigate=useNavigate()
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async () => {
-    try {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+  const handleSubmit = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      email: email,
+      password:password
+    });
+    
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+    
+    fetch("http://127.0.0.1:5000/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result)
+        setToken(result[1].token)
+        navigate("/home")
 
-      const raw = JSON.stringify({ email, password });
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      const response = await fetch(
-        "http://127.0.0.1:5000/login",
-        requestOptions
-      );
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Login failed");
-      }
-
-      console.log(result); // Assuming successful login, handle token storage or redirection here
-    } catch (error) {
-      console.error("Login error:", error.message);
-      setMessage(error.message); // Display error message
-    }
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
