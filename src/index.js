@@ -5,6 +5,7 @@ import Login from "./Routes/Login";
 import APPCONTEXT from "./AppContext";
 import Home from "./Routes/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Game from "./Routes/Game";
 function APP(){
 const [token,setToken]=useState("")
 const [user ,setUser]=useState("")
@@ -21,7 +22,12 @@ const [user ,setUser]=useState("")
     {
       path:"/home",
       element:<Home/>
+    },
+    {
+      path:"/game",
+      element:<Game/>
     }
+
   ]);
   return(
   <div>

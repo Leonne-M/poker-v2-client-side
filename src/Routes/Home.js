@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 const navigate=useNavigate()
 function  Home(){
 const handleRedirect=()=>{
-    navigate()
+    navigate("/game")
 }
 
     return(
@@ -10,7 +10,7 @@ const handleRedirect=()=>{
             <h1>
                 Welcome PLayer
             </h1>
-            <button>Play</button>
+            <button onClick={handleRedirect}>Play</button>
         </div>
     )
 }
