@@ -1,4 +1,4 @@
-function Player(){
+function Player({playerhand,handleChange}){
     return(
         <>
          <h2>Player Hand</h2>

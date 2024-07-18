@@ -6,6 +6,7 @@ import APPCONTEXT from "./AppContext";
 import Home from "./Routes/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Game from "./Routes/Game";
+import "./style.css";
 function APP(){
 const [token,setToken]=useState("")
 const [user ,setUser]=useState("")

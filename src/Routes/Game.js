@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext} from "react";
 import Computer from "./computerhand";
 import Player from "./playerhand";
+import APPCONTEXT from "../AppContext";
 
 function Game() {
+  const { token } = useContext(APPCONTEXT);
     const [playerhand, setPlayerhand] = useState([]);
     const [computerhand, setComputerhand] = useState([]);
 
@@ -24,29 +26,36 @@ function Game() {
                 setComputerhand(result.computer_hand);
             })
             .catch(error => console.error(error));
-    }, []); 
+    }, [token]); 
+  
 const handleChange=(card)=>{
- const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Authorization", `Bearer ${token}`);
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  
+  const raw = JSON.stringify({
+    id: card.id,
+    rank: card.rank,
+    suits: card.suits
+  });
+  
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+  
+  fetch("http://127.0.0.1:5000/player_moves", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setPlayerhand(result)
 
-const raw = JSON.stringify({
-  id:card.id,
-  rank: card.rank,
-  suits:card.suits
-});
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow"
-};
+    })
+    .catch((error) => console.error(error));
 
-fetch("http://127.0.0.1:5000/player_moves", requestOptions)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
-  handleChangeB()
+ handleChangeB()
     }
 const handleChangeB=()=>{
   const myHeaders = new Headers();
