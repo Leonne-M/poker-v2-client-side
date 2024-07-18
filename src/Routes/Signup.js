@@ -29,7 +29,7 @@ function Signup() {
   };
 
   const containerStyle = {
-    backgroundImage: "url('https://example.com/background.jpg')",
+    backgroundImage: "url('https://as1.ftcdn.net/v2/jpg/04/98/02/52/1000_F_498025258_4H1xIgncDvMDsy1o9nJ4Lkpau2ajsGjx.jpg')",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

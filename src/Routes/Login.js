@@ -37,7 +37,7 @@ function Login() {
 
       console.log(result);
       setToken(result[1].token)
-      navigate("/game")
+      navigate("/home")
     } catch (error) {
       console.error("Login error:", error.message);
       setMessage(error.message); 
