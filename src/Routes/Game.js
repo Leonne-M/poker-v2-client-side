@@ -7,6 +7,7 @@ function Game() {
   const { token } = useContext(APPCONTEXT);
   const [playerhand, setPlayerhand] = useState([]);
   const [computerhand, setComputerhand] = useState([]);
+  const [lastplayed,setLastplayed]=useState([])
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -24,6 +25,7 @@ function Game() {
         console.log(result);
         setPlayerhand(result.player_hand);
         setComputerhand(result.computer_hand);
+        setLastplayed(result.new_last_played_card[0]);
       })
       .catch(error => console.error(error));
   }, [token]);
@@ -51,6 +53,7 @@ fetch("http://127.0.0.1:5000/player_moves", requestOptions)
       .then((result) => {
         console.log(result);
         setPlayerhand(result.player_hand);
+        setLastplayed(result.new_lastplayed_card[0])
         handleChangeB();
         console.log(card.id)
         console.log(card.rank)
@@ -75,6 +78,7 @@ const requestOptions = {
       .then((result) => {
         console.log(result);
         setComputerhand(result.computer_hand);
+        setLastplayed(result['last played'][0])
       })
       .catch((error) => console.error(error));
 
@@ -112,6 +116,10 @@ const requestOptions = {
   return (
     <div className="game">
       <Computer computerhand={computerhand} />
+      <div>
+        <h2>Last Played Card</h2>
+          <img src={lastplayed.image} alt={`${lastplayed.rank} of ${lastplayed.suits}`} />
+      </div>
       <button onClick={handleChangeC}>Pick</button>
       <Player playerhand={playerhand} handleChange={handleChange} />
     </div>
